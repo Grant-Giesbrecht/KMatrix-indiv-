@@ -91,7 +91,6 @@ public:
 private:
 
     std::vector<std::vector<T> > mat;
-
     bool element_mult_mode = true;
 
 };
