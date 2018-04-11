@@ -1,0 +1,25 @@
+CC = clang++
+
+#Where hpp files are saved
+IEGA_INCLUDE = /usr/local/include/IEGA
+
+#Where object file is saved
+IEGA_LIB = /usr/local/lib/
+
+#Where cpp files are saved
+IEGA_SRC = /usr/local/lib/IEGA\ source
+
+#Archive file name
+ARCHIVE_FILE = libgiesbrechtcpp.a
+
+#Object files to keep in archive
+OBJECT_FILES = KMatrix.o
+
+all: KMatrix.cpp
+    #$(CC) -c KMatrix.cpp
+
+install: all
+    cp *.hpp $(IEGA_INCLUDE)
+    cp *.cpp $(IEGA_SRC)
+    #cp KMatrix.o $(IEGA_LIB)
+    #ar rvs $(IEGA_LIB)$(ARCHIVE_FILE) $(OBJECT_FILES)
