@@ -1,3 +1,7 @@
+# To install KMatrix on your system, modify this file to contain the correct directories
+# if you'd like to install them in a custom location. Once you are satisfied with the
+# install location, run 'make -f kmatrix_makefile install' (without the quote marks).
+
 CC = clang++
 
 #Where hpp files are saved
@@ -6,20 +10,26 @@ IEGA_INCLUDE = /usr/local/include/IEGA
 #Where object file is saved
 IEGA_LIB = /usr/local/lib/
 
+IEGA_LIB_OBJS = /usr/local/lib/IEGA\ source/Objects/
+
 #Where cpp files are saved
 IEGA_SRC = /usr/local/lib/IEGA\ source
 
 #Archive file name
-ARCHIVE_FILE = libgiesbrechtcpp.a
+ARCHIVE_FILE = libIEGA.a
 
 #Object files to keep in archive
-OBJECT_FILES = KMatrix.o
+OBJECT_FILES = KMatrixHelpers.o
 
-all: KMatrix.cpp
-    #$(CC) -c KMatrix.cpp
+#Same as above, but you must append '$(IEGA_LIB_OBJS)' in from of each entry. (I know
+#this is tedious, but it saves copying things all around your hard drive).
+DIR_OBJECT_FILES = $(IEGA_LIB_OBJS)KMatrixHelpers.o
+
+all: KMatrixHelpers.cpp
+	$(CC) -c KMatrixHelpers.cpp
 
 install: all
-    cp *.hpp $(IEGA_INCLUDE)
-    cp *.cpp $(IEGA_SRC)
-    #cp KMatrix.o $(IEGA_LIB)
-    #ar rvs $(IEGA_LIB)$(ARCHIVE_FILE) $(OBJECT_FILES)
+	cp *.hpp $(IEGA_INCLUDE)
+	cp *.cpp $(IEGA_SRC)
+	cp KMatrixHelpers.o $(IEGA_LIB_OBJS)
+	ar rvs $(IEGA_LIB)$(ARCHIVE_FILE) $(DIR_OBJECT_FILES)
