@@ -30,6 +30,6 @@ all: KMatrixHelpers.cpp
 
 install: all
 	cp *.hpp $(IEGA_INCLUDE)
-	cp *.cpp $(IEGA_SRC)
+	cp KMatrixHelpers.cpp $(IEGA_SRC)
 	cp KMatrixHelpers.o $(IEGA_LIB_OBJS)
 	ar rvs $(IEGA_LIB)$(ARCHIVE_FILE) $(DIR_OBJECT_FILES)

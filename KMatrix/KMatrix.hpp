@@ -83,7 +83,7 @@ public:
     static KMatrix zero(int r, int c);
     static KMatrix zero(int rc);
     static KMatrix constant(T val, int r, int c);
-    static KMatrix makeRange(T start, T step_size, T end, int rows=1);
+    static KMatrix range(T start, T step_size, T end, int rows=1);
 //    static std::vector<std::vector<double> > KMatrix_to_vector(KMatrix km);
 
     //Other
@@ -91,7 +91,7 @@ public:
     std::vector<std::vector<T> >& getMat();
     bool& getElementMultMode();
     
-private:
+protected:
 
     std::vector<std::vector<T> > mat;
     bool element_mult_mode = true;
@@ -120,10 +120,23 @@ KMatrix<T> matrixMult(const KMatrix<T>& a, const KMatrix<T>& b);
 template <class T>
 KMatrix<T> elementMult(const KMatrix<T>& a, const KMatrix<T>& b);
 
-/*
-  IMPLEMENTATION
+template <class T>
+KMatrix<T> sin(const KMatrix<T>& a);
 
- */
+template <class T>
+KMatrix<T> cos(const KMatrix<T>& a);
+
+template <class T>
+KMatrix<T> tan(const KMatrix<T>& a);
+
+template <class T>
+KMatrix<T> asin(const KMatrix<T>& a);
+
+template <class T>
+KMatrix<T> acos(const KMatrix<T>& a);
+
+template <class T>
+KMatrix<T> atan(const KMatrix<T>& a);
 
 /*----------------------------------------------------------------
 -------------------------- INITIALIZERS --------------------------
@@ -208,12 +221,14 @@ template <class T>
 KMatrix<T>::KMatrix(T init, int rows, int cols){
     
     KMatrix<T>::clear();
-    for (int r = 0 ; r < rows ; r++){
-        std::vector<T> temp;
-        temp.resize(cols);
-        for (int i = 0 ; i < cols ; i++){
-            temp[i] = init;
-        }
+	
+	std::vector<T> temp;
+	temp.resize(cols);
+	for (int i = 0 ; i < cols ; i++){
+		temp[i] = init;
+	}
+	
+    for (int r = 0 ; r < rows ; r++){	
         mat.push_back(temp);
     }
     
@@ -826,7 +841,7 @@ KMatrix<T> KMatrix<T>::constant(T val, int r, int c){
  Returns the resulting matrix
  */
 template <class T>
-KMatrix<T> KMatrix<T>::makeRange(T start, T step_size, T end, int rows){
+KMatrix<T> KMatrix<T>::range(T start, T step_size, T end, int rows){
 
 //    unsigned int idx;
     std::vector<std::vector<T> > vals;
@@ -929,6 +944,149 @@ KMatrix<T> elementMult(const KMatrix<T>& a, const KMatrix<T>& b){
     
 }
 
+/*
+ Computes the sin of all elements in a and returns a new KMatrix
+ containing the sines of 'a'.
+ 
+ a - Matrix whos sine to take.
+ 
+ Returns matrix containing sine of a in each element
+ */
+template <class T>
+KMatrix<T> sin(const KMatrix<T>& a){
+
+	//Declare KMatrix
+	KMatrix<T> out(a.rows(), a.cols());
+	
+	//populate with new values
+	for (size_t r = 0; r < a.rows() ; r++){
+		for (size_t c = 0 ; c < a.cols() ; c++){
+			out(r, c) = sin(a(r, c));
+		}
+	}
+	
+	return out;
+}
+
+/*
+ Computes the sin of all elements in a and returns a new KMatrix
+ containing the cosines of 'a'.
+ 
+ a - Matrix whos cosine to take.
+ 
+ Returns matrix containing cosine of a in each element
+ */
+template <class T>
+KMatrix<T> cos(const KMatrix<T>& a){
+	
+	//Declare KMatrix
+	KMatrix<T> out(a.rows(), a.cols());
+	
+	//populate with new values
+	for (size_t r = 0; r < a.rows() ; r++){
+		for (size_t c = 0 ; c < a.cols() ; c++){
+			out(r, c) = cos(a(r, c));
+		}
+	}
+	
+	return out;
+}
+
+/*
+ Computes the tan of all elements in a and returns a new KMatrix
+ containing the tangent of 'a'.
+ 
+ a - Matrix whos tangent to take.
+ 
+ Returns matrix containing tangent of a in each element
+ */
+template <class T>
+KMatrix<T> tan(const KMatrix<T>& a){
+	
+	//Declare KMatrix
+	KMatrix<T> out(a.rows(), a.cols());
+	
+	//populate with new values
+	for (size_t r = 0; r < a.rows() ; r++){
+		for (size_t c = 0 ; c < a.cols() ; c++){
+			out(r, c) = tan(a(r, c));
+		}
+	}
+	
+	return out;
+}
+
+/*
+ Computes the arcsin of all elements in a and returns a new KMatrix
+ containing the arcsines of 'a'.
+ 
+ a - Matrix whos arcsine to take.
+ 
+ Returns matrix containing arcsine of a in each element
+ */
+template <class T>
+KMatrix<T> asin(const KMatrix<T>& a){
+	
+	//Declare KMatrix
+	KMatrix<T> out(a.rows(), a.cols());
+	
+	//populate with new values
+	for (size_t r = 0; r < a.rows() ; r++){
+		for (size_t c = 0 ; c < a.cols() ; c++){
+			out(r, c) = asin(a(r, c));
+		}
+	}
+	
+	return out;
+}
+
+/*
+ Computes the arccosin of all elements in a and returns a new KMatrix
+ containing the arccosines of 'a'.
+ 
+ a - Matrix whos arccosine to take.
+ 
+ Returns matrix containing arccosine of a in each element
+ */
+template <class T>
+KMatrix<T> acos(const KMatrix<T>& a){
+	
+	//Declare KMatrix
+	KMatrix<T> out(a.rows(), a.cols());
+	
+	//populate with new values
+	for (size_t r = 0; r < a.rows() ; r++){
+		for (size_t c = 0 ; c < a.cols() ; c++){
+			out(r, c) = acos(a(r, c));
+		}
+	}
+	
+	return out;
+}
+
+/*
+ Computes the arctangent of all elements in a and returns a new KMatrix
+ containing the arctangents of 'a'.
+ 
+ a - Matrix whos arctangent to take.
+ 
+ Returns matrix containing arctangent of a in each element
+ */
+template <class T>
+KMatrix<T> atan(const KMatrix<T>& a){
+	
+	//Declare KMatrix
+	KMatrix<T> out(a.rows(), a.cols());
+	
+	//populate with new values
+	for (size_t r = 0; r < a.rows() ; r++){
+		for (size_t c = 0 ; c < a.cols() ; c++){
+			out(r, c) = atan(a(r, c));
+		}
+	}
+	
+	return out;
+}
 
 /*
  Access a reference to the 2D vector containing the matrix's data
